@@ -16,7 +16,7 @@ enum LA_States { Wait, S1, Inc, S2, Dec, Reset } State;
 
 void LED_latch()
 {
-unsigned char tmpA = ~PINA;
+unsigned char tmpA = (~PINA) & 0x03;
  switch(State) {
    case Wait:
 	
