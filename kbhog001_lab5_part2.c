@@ -16,15 +16,17 @@ enum LA_States { Wait, S1, Inc, S2, Dec, Reset } State;
 
 void LED_latch()
 {
+unsigned char tmpA = ~PINA;
  switch(State) {
    case Wait:
-	if (~PINA == 0x03) {
+	
+	if (tmpA == 0x03) {
 		State = Reset;
 	}
-	else if (~PINA == 0x01){
+	else if (tmpA == 0x01){
 		State = S1;
 	}
-	else if (~PINA == 0x02){
+	else if (tmpA == 0x02){
                 State = S2;
         }
 	else {
@@ -33,10 +35,10 @@ void LED_latch()
 	break;
   
    case S1:
-	if (~PINA == 0x02){
+	if (tmpA == 0x02){
 		State = S2;
 	}
-	else if (~PINA == 0x00){
+	else if (tmpA == 0x00){
 		State = Wait;
 	}
 	else {
@@ -45,13 +47,13 @@ void LED_latch()
 	break;
 
    case Inc:
-	if (~PINA == 0x03){
+	if (tmpA == 0x03){
                 State = Reset;
         }
-        else if (~PINA == 0x02){
+        else if (tmpA == 0x02){
                 State = S2;
         }
-	else if (~PINA == 0x01){
+	else if (tmpA == 0x01){
 		State = Inc;
 	}
         else{
@@ -60,10 +62,10 @@ void LED_latch()
 	break;
 
    case S2:
-	if (~PINA == 0x01){
+	if (tmpA == 0x01){
 		State = S1;
 	}
-	else if (~PINA == 0x00){
+	else if (tmpA == 0x00){
                 State = Wait;
         }
 	else {
@@ -72,13 +74,13 @@ void LED_latch()
 	break;
 
    case Dec:
-        if (~PINA == 0x03){
+        if (tmpA == 0x03){
                 State = Reset;
         }
-        else if (~PINA == 0x02){
+        else if (tmpA == 0x02){
                 State = Dec;
         }
-        else if (~PINA == 0x01){
+        else if (tmpA == 0x01){
                 State = S1;
         }
         else{
